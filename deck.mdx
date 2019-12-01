@@ -1,96 +1,478 @@
-import {
-  CodeSurfer,
-  CodeSurferColumns,
-  Step,
-} from "code-surfer";
-import { github, vsDark } from "@code-surfer/themes";
+import {Image, Appear, Notes} from 'mdx-deck'
+import {CodeSurfer, CodeSurferColumns, Step} from 'code-surfer'
+import {github, vsDark} from '@code-surfer/themes'
+
+import Me from './Me'
+import References from './References'
+import Multiline from './Multiline'
+
+import complexity from './images/complexity.jpeg'
+import documents from './images/documents.jpeg'
+import typescript from './images/typescript.png'
 
 export const theme = vsDark;
 
-# Hello 👋
+<Multiline
+  Elem="h1"
+  margin={50}
+  lines={['Modeling your way', 'to consistency']}
+/>
 
-You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](https://codesurfer.pomb.us)
+---
+
+<img src="https://github.com/remojansen/logo.ts/raw/master/ts.png" width="300"/>
+
+<Notes>
+
+Disclaimer!
+
+It works for other languages as well
+
+Even JS -> but the compiler helps A LOT
+
+</Notes>
+
+---
+
+<Image src={documents} />
+
+<Notes>
+
+Web: Documents (past)
+
+</Notes>
+
+---
+
+<Image src={complexity} />
+
+<Notes>
+
+Web: Apps (today)
+
+**Complexity** (elaborate flows)
+
+</Notes>
+
+---
+
+## Domain Modeling
+
+<Appear>
+
+😕 Conditions us 🤐
+
+</Appear>
+
+<Notes>
+
+Central piece of building things right
+
+way we model -> way we work
+
+</Notes>
+
+---
+
+<Notes>
+
+Common way to represent data loaded asynchronously
+
+</Notes>
+
+<CodeSurfer>
+
+```ts
+interface AsynUser {
+  isLoading: boolean
+  didLoad: boolean
+  data?: User
+  error?: Error
+}
+```
+
+```ts
+interface AsynUser {
+  isLoading: boolean
+  didLoad: boolean
+  data?: User
+  error?: Error
+}
+
+const idle = {
+  isLoading: false,
+  didLoad: false,
+  data: undefined,
+  error: undefined,
+}
+```
+
+```ts
+interface AsynUser {
+  isLoading: boolean
+  didLoad: boolean
+  data?: User
+  error?: Error
+}
+
+const idle = {
+  isLoading: false,
+  didLoad: false,
+  data: undefined,
+  error: undefined,
+}
+
+const loading = {
+  isLoading: true,
+  didLoad: false,
+  data: undefined,
+  error: undefined,
+}
+```
+
+```ts
+interface AsynUser {
+  isLoading: boolean
+  didLoad: boolean
+  data?: User
+  error?: Error
+}
+
+const idle = {
+  isLoading: false,
+  didLoad: false,
+  data: undefined,
+  error: undefined,
+}
+
+const loading = {
+  isLoading: true,
+  didLoad: false,
+  data: undefined,
+  error: undefined,
+}
+
+const success = {
+  isLoading: false,
+  didLoad: true,
+  data: user,
+  error: undefined,
+}
+```
+
+```ts
+interface AsynUser {
+  isLoading: boolean
+  didLoad: boolean
+  data?: User
+  error?: Error
+}
+
+const idle = {
+  isLoading: false,
+  didLoad: false,
+  data: undefined,
+  error: undefined,
+}
+
+const loading = {
+  isLoading: true,
+  didLoad: false,
+  data: undefined,
+  error: undefined,
+}
+
+const success = {
+  isLoading: false,
+  didLoad: true,
+  data: user,
+  error: undefined,
+}
+
+const failure = {
+  isLoading: false,
+  didLoad: true,
+  data: undefined,
+  error: new Error('Fetch error'),
+}
+```
+
+```ts 1:15
+const LoadingUser: React.FC<AsyncUser> = (props) => {
+  if (props.isLoading) {
+    return <Loading />
+  }
+
+  if (props.didLoad && props.error) {
+    return <ErrorMessage error={props.error} />
+  }
+
+  if (props.didLoad && props.data) {
+    return <UserCard user={props.data} />
+  }
+
+  return <Idle />
+}
+```
+
+```diff 2:14
+
+```
+
+```diff 2[7:21],6[7:34],10[7:34]
+
+```
+
+```jsx 1:22
+interface AsynUser {
+  isLoading: boolean
+  didLoad: boolean
+  data?: User
+  error?: Error
+}
+
+const LoadingUser: React.FC<AsyncUser> = (props) => {
+  if (props.isLoading) {
+    return <Loading />
+  }
+
+  if (props.didLoad && props.error) {
+    return <ErrorMessage error={props.error} />
+  }
+
+  if (props.didLoad && props.data) {
+    return <UserCard user={props.data} />
+  }
+
+  return <Idle />
+}
+```
+
+</CodeSurfer>
+
+---
+
+<Multiline lines={['🚢 📦', 'All good, right?']} />
+
+<Notes>
+
+All good!
+
+Ship it like it's hot!
+
+</Notes>
+
+---
+
+<Multiline lines={['What if ... ?', '🤔']} />
+
+---
+
+<Notes>
+
+No single source of truth
+
+Status depends on several values
+
+Not all possible combinations are valid
+
+\---
+
+Let's try to fix it:
+
+1. Make it generic
+1. Only one value controls the status
+
+</Notes>
+
+<CodeSurfer>
+
+```ts 8:13 subtitle="😱 What does that even ? 🤔"
+interface AsyncUser {
+  isLoading: boolean
+  didLoad: boolean
+  data?: User
+  error?: Error
+}
+
+const leWhat = {
+  isLoading: true,
+  didLoad: true,
+  data: user,
+  error: someError,
+}
+```
+
+```ts
+interface AsyncData<T> {
+  isLoading: boolean
+  didLoad: boolean
+  data?: T
+  error?: Error
+}
+
+const leWhat: AsyncData<User> = {
+  isLoading: true,
+  didLoad: true,
+  data: user,
+  error: someError,
+}
+```
+
+```ts
+interface AsyncData<T> {
+  isLoading: boolean
+  didLoad: boolean
+  data?: T
+  error?: Error
+}
+```
+
+```diff 2:3 title="😒 No single source of truth 👎"
+
+```
+
+```ts
+type Status =
+  | 'idle'
+  | 'loading'
+  | 'success'
+  | 'failure'
+
+interface AsyncData<T> {
+  status: Status
+  data?: T
+  error?: Error
+}
+```
+
+```diff 1:11
+
+```
+
+```jsx title="😎 Single source of truth 👍"
+const LoadingUser: React.FC<AsyncData<User>> = (props) => {
+  if (props.status === 'idle') {
+    return <Idle />
+  }
+
+  if (props.status === 'loading') {
+    return <Loading />
+  }
+
+  if (props.status === 'failure' && props.error) {
+    return <ErrorMessage error={props.error} />
+  }
+
+  if (props.status === 'success' && props.data) {
+    return <UserCard user={props.data} />
+  }
+
+  return null
+}
+```
+
+```diff 1[29:43]
+
+```
+
+```diff 2:18
+
+```
+
+```diff 2[7:29],6[7:32],10[7:47],14[7:46]
+
+```
+
+```jsx 1:31
+type Status =
+  | 'idle'
+  | 'loading'
+  | 'success'
+  | 'failure'
+
+interface AsyncData<T> {
+  status: Status
+  data?: T
+  error?: Error
+}
+
+const LoadingUser: React.FC<AsyncData<User>> = (props) => {
+  if (props.status === 'idle') {
+    return <Idle />
+  }
+
+  if (props.status === 'loading') {
+    return <Loading />
+  }
+
+  if (props.status === 'failure' && props.error) {
+    return <ErrorMessage error={props.error} />
+  }
+
+  if (props.status === 'success' && props.data) {
+    return <UserCard user={props.data} />
+  }
+
+  return null
+}
+```
+
+</CodeSurfer>
+
+---
+
+<Notes>
+
+Now we did it!
+
+Send it to prod, I want to go home!
+
+</Notes>
+
+<Multiline lines={['🚢 📦', 'Ok, now is all good, right?']} />
+
+---
+
+<Notes>
+
+It never is ...
+
+</Notes>
+
+<Multiline lines={[<span>Is it <i>tho</i> ?</span>, '🤔']} />
 
 ---
 
 <CodeSurfer>
 
-```js title="This is a title" subtitle="and this a subtitle"
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
+```ts 13:23 subtitle="🤷 Again Joe? 🤦♂️"
+type Status =
+  | 'idle'
+  | 'loading'
+  | 'success'
+  | 'failure'
+
+interface AsyncData<T> {
+  status: Status
+  data?: T
+  error?: Error
 }
 
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
+const queEsEsto = {
+  status: 'idle',
+  data: user,
+  error: new Error('Fetch error'),
+}
 
-  if (!sit || ut < 1) {
-    return [];
-  }
-
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
+const whoDidThis = {
+  status: 'success',
+  data: undefined,
+  error: undefined,
 }
 ```
 
-```js
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
-
-function adipiscing(...elit) {
-  if (!elit.sit) {
-    return [];
-  }
-
-  const sed = elit[0];
-  return eiusmod.tempor(sed) ? sed : [sed];
-}
-
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
-
-  if (!sit || ut < 1) {
-    return [];
-  }
-
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
-}
-```
-
-```diff 1[10:14],2[15:19],3[22:27],10:12
+```diff 14:16,20:22 subtitle="🤷 Again Joe? 🤦♂️"
 
 ```
 
@@ -98,55 +480,448 @@ function incididunt(ipsum, ut = 1) {
 
 ---
 
-<CodeSurferColumns themes={[vsDark, github]}>
+<Multiline
+  lines={[
+    <a href={typescript} target="_blank">
+      Discriminated Unions
+    </a>,
+    '🦸 to the rescue 🦸',
+  ]}
+/>
 
-<Step>
+<Notes>
 
-```js
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
-```
+Not specific to TS tho!
 
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
-```
-
-</Step>
-
-<Step>
-
-```js
-const lorem = (ipsum, dolor, sit) => {
-  const amet = dolor - ipsum;
-  return consectetur.adipiscing(
-    {
-      elit: sed.eiusmod(sit - dolor) / amet + 2,
-    },
-    (tempor, incididunt) => ipsum + amet * incididunt
-  );
-};
-
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
-```
-
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
-
-const sed = (eiusmod, tempor, incididunt) => {
-  const ut = tempor - eiusmod;
-  return labore.et(
-    {
-      amet: dolore.magna(incididunt - tempor) / ut + 2,
-    },
-    (aliqua, elit) => eiusmod + ut * elit
-  );
-};
-```
-
-</Step>
-
-</CodeSurferColumns>
+</Notes>
 
 ---
 
-docs:  
-[codesurfer.pomb.us](https://codesurfer.pomb.us)
+<Notes>
+
+Can we attatch the data to the status?
+
+</Notes>
+
+<CodeSurfer>
+
+```ts
+type Status =
+  | 'idle'
+  | 'loading'
+  | 'success'
+  | 'failure'
+
+interface AsyncData<T> {
+  status: Status
+  data?: T
+  error?: Error
+}
+```
+
+```diff 8:10
+
+```
+
+```ts
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+```
+
+```diff 2[5:20],3[5:23],4[5:32],5[5:37]
+
+```
+
+```diff 4[25:31],5[25:36] subtitle="No more optional values 🤯"
+
+```
+
+</CodeSurfer>
+
+<!-- TODO: merge these two steps  -->
+
+---
+
+<CodeSurfer>
+
+```jsx
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+
+const LoadingUser: React.FC<AsyncData<User>> = (props) => {
+  if (props.status === 'idle') {
+    return <Idle />
+  }
+
+  if (props.status === 'loading') {
+    return <Loading />
+  }
+
+  if (props.status === 'failure') {
+    return <ErrorMessage error={props.error} />
+  }
+
+  return <UserCard user={props.data} />
+}
+```
+
+```diff 16:20
+
+```
+
+```diff 8:20
+
+```
+
+</CodeSurfer>
+
+---
+
+### Ok, now is all good 😅
+
+---
+
+<Multiline
+  lines={['🙄 But ... 👀', 'Can we improve it?']}
+/>
+
+<Notes>
+
+More changes?
+
+</Notes>
+
+---
+
+### Let's make it declarative 🗺 
+
+---
+
+<CodeSurfer>
+
+```ts subtitle="What do we want to do for each case? 🤨"
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+```
+
+```ts
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+
+interface Matcher<T, R> {
+  idle: () => R
+  loading: () => R
+  success: (data: T) => R
+  failure: (error: Error) => R
+}
+```
+
+<!-- TODO: can this be two columns??? -->
+
+```diff 2:5,8:11
+
+```
+
+```ts
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+
+interface Matcher<T, R> {
+  idle: () => R
+  loading: () => R
+  success: (data: T) => R
+  failure: (error: Error) => R
+}
+
+const LoadingUser: React.FC<AsyncData<User>> = (props) => {
+  if (props.status === 'idle') {
+    return <Idle />
+  }
+
+  if (props.status === 'loading') {
+    return <Loading />
+  }
+
+  if (props.status === 'failure') {
+    return <ErrorMessage error={props.error} />
+  }
+
+  return <UserCard user={props.data} />
+}
+```
+
+```ts
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+
+interface Matcher<T, R> {
+  idle: () => R
+  loading: () => R
+  success: (data: T) => R
+  failure: (error: Error) => R
+}
+
+const match = <T, R>(m: Matcher<T, R>, ad: AsyncData<T>): R => {
+  if (ad.status === 'idle') {
+    return m.idle()
+  }
+
+  if (ad.status === 'loading') {
+    return m.loading()
+  }
+
+  if (ad.status === 'failure') {
+    return m.success(ad.error)
+  }
+
+  return m.success(ad.data)
+}
+```
+
+```diff 14[15:59]
+
+```
+
+```diff 15[7:26],16[12:19],19[7:29],20[12:22],23[7:29],24[12:30],27[10:27]
+
+```
+
+```ts 30:40
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+
+interface Matcher<T, R> {
+  idle: () => R
+  loading: () => R
+  success: (data: T) => R
+  failure: (error: Error) => R
+}
+
+const match = <T, R>(m: Matcher<T, R>, ad: AsyncData<T>) => {
+  if (ad.status === 'idle') {
+    return m.idle()
+  }
+
+  if (ad.status === 'loading') {
+    return m.loading()
+  }
+
+  if (ad.status === 'failure') {
+    return m.success(ad.error)
+  }
+
+  return m.success(ad.data)
+}
+
+const LoadingUser: React.FC<AsyncData<User>> = (asyncUser) =>
+  match<User, React.ReactNode>(
+    {
+      idle: () => <Idle />,
+      loading: () => <Loading />,
+      failure: (error) => <ErrorMessage error={error} />,
+      success: (user) => <UserCard user={user} />,
+    },
+    asyncUser,
+  )
+```
+
+```diff 31[3:30]
+
+```
+
+```diff 32:37
+
+```
+
+```diff 1:40
+
+```
+
+```diff 1:28
+
+```
+
+```diff 30:40
+
+```
+
+</CodeSurfer>
+
+---
+
+### 📝 Let's recap ...
+
+---
+
+<Notes>
+
+1. No single source of truth, error prone
+
+1. Union types -> Single source
+
+1. Discriminated unions
+
+1. Declarative reusable code
+
+</Notes>
+
+<CodeSurfer>
+
+```jsx 1:22
+interface AsyncUser {
+  isLoading: boolean
+  didLoad: boolean
+  data?: User
+  error?: Error
+}
+
+const LoadingUser: React.FC<AsyncUser> = (props) => {
+  if (props.isLoading) {
+    return <Loading />
+  }
+
+  if (props.didLoad && props.error) {
+    return <ErrorMessage error={props.error} />
+  }
+
+  if (props.didLoad && props.data) {
+    return <UserCard user={props.data} />
+  }
+
+  return <Idle />
+}
+```
+
+```jsx 1:25
+interface AsyncData {
+  status: 'idle' | 'loading' | 'failure' | 'success'
+  data?: User
+  error?: Error
+}
+
+const LoadingUser: React.FC<AsyncData<User>> = (props) => {
+  if (props.status === 'idle') {
+    return <Idle />
+  }
+
+  if (props.status === 'loading') {
+    return <Loading />
+  }
+
+  if (props.status === 'failure' && props.error) {
+    return <ErrorMessage error={props.error} />
+  }
+
+  if (props.status === 'success' && props.data) {
+    return <UserCard user={props.data} />
+  }
+
+  return null
+}
+```
+
+```jsx 1:21
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+
+const LoadingUser: React.FC<AsyncData<User>> = (props) => {
+  if (props.status === 'idle') {
+    return <Idle />
+  }
+
+  if (props.status === 'loading') {
+    return <Loading />
+  }
+
+  if (props.status === 'failure') {
+    return <ErrorMessage error={props.error} />
+  }
+
+  return <UserCard user={props.data} />
+}
+```
+
+```jsx 1:5,23:32
+type AsyncData<T> =
+  | {status: 'idle'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+
+const match = <T, R>(m: Matcher<T, R>, ad: AsyncData<T>) => {
+  if (ad.status === 'idle') {
+    return m.idle()
+  }
+
+  if (ad.status === 'loading') {
+    return m.loading()
+  }
+
+  if (ad.status === 'failure') {
+    return m.success(ad.error)
+  }
+
+  return m.success(ad.data)
+}
+
+const LoadingUser: React.FC<AsyncData<User>> = (asyncUser) =>
+  match<User, React.ReactNode>(
+    {
+      idle: () => <Idle />,
+      loading: () => <Loading />,
+      failure: (error) => <ErrorMessage error={error} />,
+      success: (user) => <UserCard user={user} />,
+    },
+    asyncUser,
+  )
+```
+
+</CodeSurfer>
+
+---
+
+## Domain Modeling
+
+<Appear>
+
+### 💪 enables us 👍
+
+</Appear>
+
+---
+
+### 📚 Resources 🤓
+
+<References />
+
+---
+
+<Multiline
+  lines={['Happy & Safe Coding!', '🤓🦄😏']}
+/>
+
+#### Thanks! 👋

@@ -1,23 +1,22 @@
-# MDX Deck + Code Surfer template
+# Modeling Your Way To Consistency
 
-This project was generated with the `npm init code-surfer-deck` command.
+Slides for my lightning talk at [dotJS 2019](https://www.dotjs.io/)
 
-## Development
+### Development
 
-To run the presentation deck in development mode:
+Dev server:
 
-```sh
-npm start
+```
+yarn start
 ```
 
-Edit the [`deck.mdx`](deck.mdx) file to get started.
+Build static:
 
-## Exporting
-
-To build the presentation deck:
-
-```sh
-npm run build
+```
+yarn build
 ```
 
-For more documentation see [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](https://codesufer.pomb.us/)
+### LICENSE
+
+[MIT License](https://github.com/gillchristian/modeling/blob/master/LICENSE) ©
+[Christian Gill](https://gillchristian.xyz)

@@ -10,5 +10,8 @@
     "code-surfer": "3.0.0-beta.1",
     "mdx-deck": "3.0.13"
   },
-  "name": "matching-states"
+  "name": "matching-states",
+  "dependencies": {
+    "styled-components": "^4.4.1"
+  }
 }
