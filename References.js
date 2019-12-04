@@ -49,6 +49,11 @@ const Referenes = () => (
   <Styled>
 
     <Entry
+      link="https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions"
+      title="Discriminated Unions"
+    />
+
+    <Entry
       link="https://dev.to/davidkpiano/no-disabling-a-button-is-not-app-logic-598i"
       title="No, disabling a button is not app logic"
       twitter="https://twitter.com/DavidKPiano"
