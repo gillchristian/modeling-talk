@@ -7,7 +7,7 @@ const style = (i, length, marginTop) =>
     ? { marginTop  }
     : { marginBottom: 0, marginTop  }
 
-const Multiline = ({ lines, margin = 25, Elem = "h2" }) => (
+const Multiline = ({ lines, margin = 25, Elem = 'h2' }) => (
   <>
     {lines.map(
       (l, i) =>  <Elem style={style(i, lines.length, margin)}>{l}</Elem>

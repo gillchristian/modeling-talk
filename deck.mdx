@@ -6,6 +6,7 @@ import Me from './Me'
 import References from './References'
 import Multiline from './Multiline'
 import Logos from './Logos'
+import SelfLink from './SelfLink'
 
 import complexity from './images/complexity.jpeg'
 import documents from './images/documents.jpeg'
@@ -19,23 +20,21 @@ export const theme = vsDark;
   lines={['Modeling your way', 'to consistency']}
 />
 
-<small>
-  <a href="http://bit.ly/dotjs-modeling" target="_blank">bit.ly/dotjs-modeling</a>
-</small>
+<SelfLink />
 
 ---
 
-<img src={typescript} width="300"/>
+<img src={typescript} style={{ width: '22vw' }} />
 
 ---
 
-<img src={typescript} width="300"/>
+<img src={typescript} style={{ width: '22vw' }} />
 
 <Logos />
 
 <Notes>
 
-Disclaimer!
+DISCLAIMER !
 
 It works for other languages as well
 
@@ -71,7 +70,7 @@ Web: Apps (today)
 
 <Appear>
 
-😕 Conditions us 🤐
+### 😕 Conditions us 🤐
 
 </Appear>
 
@@ -360,19 +359,7 @@ It never is ...
 
 <CodeSurfer>
 
-```ts 13:23 title="🤷 Again John? 🤦"
-type Status =
-  | 'idle'
-  | 'loading'
-  | 'success'
-  | 'failure'
-
-interface AsyncData<T> {
-  status: Status
-  data?: T
-  error?: Error
-}
-
+```ts title="🤷 Again John? 🤦"
 const queEsEsto = {
   status: 'idle',
   data: user,
@@ -430,7 +417,7 @@ type AsyncData<T> =
   | {status: 'failure', error: Error}
 ```
 
-```diff 4[25:31],5[25:36] title="No more optional values 🤯"
+```diff 4[6:31],5[6:36] title="No more optional values 🤯"
 
 ```
 
@@ -586,7 +573,7 @@ const match = <T, R>(m: Matcher<T, R>, ad: AsyncData<T>): R => {
 
 ```
 
-```ts 31[3:30],32:39
+```ts 31:39
 type AsyncData<T> =
   | {status: 'idle'}
   | {status: 'loading'}
@@ -821,13 +808,13 @@ const LoadingUser: React.FC<AsyncData<User>> = (props) =>
 
 <Appear>
 
-### 💪 enables us 👍
+## 💪 enables us 👍
 
 </Appear>
 
 ---
 
-### 📚 Resources 🤓
+## 📚 Resources 🤓
 
 <References />
 
@@ -837,8 +824,6 @@ const LoadingUser: React.FC<AsyncData<User>> = (props) =>
   lines={['🤓🦄😏', 'Happy & Safe Coding!']}
 />
 
-<p style={{ marginTop: 0, fontWeight: 'bold' }}>Thanks! 👋</p>
+<h2>Thanks! 👋</h2>
 
-<small>
-  <a href="http://bit.ly/dotjs-modeling" target="_blank">bit.ly/dotjs-modeling</a>
-</small>
+<SelfLink />

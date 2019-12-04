@@ -2,16 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import {vsDark as theme} from '@code-surfer/themes'
 
-const Styled = styled.div`
+const Styled = styled.ul`
   text-align: left;
   font-size: 32px;
-  & > div {
-  }
 `
 
 const Link = styled.a.attrs(_ => ({ target: '_blank' }))`
   color: ${theme.colors.primary};
   text-decoration: none;
+  cursor: pointer;
 
   &:hover,
   &:visited,
@@ -21,8 +20,8 @@ const Link = styled.a.attrs(_ => ({ target: '_blank' }))`
   }
 `
 
-const StyledEntry = styled.div`
-  margin-bottom: 15px;
+const StyledEntry = styled.li`
+  margin-bottom: 25px;
   vertical-align: middle;
 `
 
@@ -35,7 +34,7 @@ const Small = styled.div`
 const Entry = ({ link, title, twitter, user }) => (
   <StyledEntry>
     <div>
-      <Link href={link}>{title}</Link>
+    <Link href={link}>{title}</Link>
     </div>
     {Boolean(twitter) && (
       <Small>
@@ -50,7 +49,12 @@ const Referenes = () => (
 
     <Entry
       link="https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions"
-      title="Discriminated Unions"
+      title="TypeScript Discriminated Unions"
+    />
+
+    <Entry
+      link="https://github.com/gillchristian/remote-data-ts/"
+      title="remote-data-ts"
     />
 
     <Entry
@@ -72,11 +76,6 @@ const Referenes = () => (
       title="Domain Modeling Made Functional"
       twitter="https://twitter.com/ScottWlaschin"
       user="Scott Wlaschin"
-    />
-
-    <Entry
-      link="https://github.com/gillchristian/remote-data-ts/"
-      title="remote-data-ts"
     />
 
   </Styled>
