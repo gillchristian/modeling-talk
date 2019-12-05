@@ -5,7 +5,6 @@ import elm from './images/elm.png'
 import flow from './images/flow.png'
 import reason from './images/reason.png'
 import purescript from './images/purescript.png'
-import javascript from './images/javascript.png'
 
 const Styled = styled.div`
   position: relative;
@@ -28,12 +27,11 @@ const Img = styled.img`
 
 const Logos = () => (
   <Styled>
-    <Img src={reason} right="18%" bottom="15%" deg={-15} />
-    <Img src={javascript} right="12%" top="25%" deg={15} size={20} />
+    <Img src={flow} right="18%" bottom="15%" deg={-15} size={25} />
+    <Img src={purescript} right="12%" top="25%" deg={15} size={25} />
 
-    <Img src={elm} left="22%" top="10%" deg={10} />
-    <Img src={purescript} left="5%" top="30%" deg={-5} />
-    <Img src={flow} left="20%" bottom="15%" deg={15} />
+    <Img src={reason} left="18%" top="15%" deg={-15} />
+    <Img src={elm} left="13%" bottom="20%" deg={10} />
 
   </Styled>
 )

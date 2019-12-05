@@ -53,6 +53,11 @@ const Referenes = () => (
     />
 
     <Entry
+      link="https://dev.to/housinganywhere/matching-your-way-to-consistent-states-1oag"
+      title="Matching your way to consistent states"
+    />
+
+    <Entry
       link="https://github.com/gillchristian/remote-data-ts/"
       title="remote-data-ts"
     />
