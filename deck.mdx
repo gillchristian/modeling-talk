@@ -1,4 +1,4 @@
-import {Image, Appear, Notes} from 'mdx-deck'
+import {Image, Appear} from 'mdx-deck'
 import {CodeSurfer, CodeSurferColumns, Step} from 'code-surfer'
 import {vsDark} from '@code-surfer/themes'
 
@@ -20,16 +20,6 @@ export const theme = vsDark;
 
 <SelfLink />
 
-<SelfLink />
-
-<Notes>
-
-Central piece of building things right
-
-way we model -> way we work
-
-</Notes>
-
 ---
 
 <img src={typescript} style={{ width: '22vw' }} />
@@ -44,23 +34,7 @@ way we model -> way we work
 
 <SelfLink />
 
-<Notes>
-
-DISCLAIMER !
-
-It works for other languages as well
-
-Even JS -> but the compiler helps A LOT
-
-</Notes>
-
 ---
-
-<Notes>
-
-Common way to represent data loaded asynchronously
-
-</Notes>
 
 <CodeSurfer>
 
@@ -152,33 +126,9 @@ const LoadingUser = (props: AsyncData<User>) => {
 
 ---
 
-<Notes>
-
-All good!
-
-Ship it like it's hot!
-
-</Notes>
-
 <Multiline lines={['🚢 📦', 'All good, right?']} />
 
 ---
-
-<Notes>
-
-No single source of truth
-
-Status depends on several values
-
-Not all possible combinations are valid
-
-\---
-
-Let's try to fix it:
-
-1. Only one value controls the status
-
-</Notes>
 
 <CodeSurfer>
 
@@ -212,19 +162,7 @@ type AsyncData<T> = {
 
 <Multiline lines={['Discriminated Unions', '🦸 to the rescue 🦸']} />
 
-<Notes>
-
-Not specific to TS tho!
-
-</Notes>
-
 ---
-
-<Notes>
-
-Can we attatch the data to the status?
-
-</Notes>
 
 <CodeSurfer>
 
