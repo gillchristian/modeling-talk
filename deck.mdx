@@ -6,6 +6,7 @@ import Me from './Me'
 import References from './References'
 import Multiline from './Multiline'
 import Logos from './Logos'
+import SelfLink from './SelfLink'
 
 import typescript from './images/typescript.png'
 
@@ -17,17 +18,21 @@ export const theme = vsDark;
   lines={['Modeling your way', 'to consistency']}
 />
 
-<Me />
+<SelfLink />
 
 ---
 
 <img src={typescript} style={{ width: '22vw' }} />
+
+<SelfLink />
 
 ---
 
 <img src={typescript} style={{ width: '22vw' }} />
 
 <Logos />
+
+<SelfLink />
 
 ---
 
@@ -155,7 +160,7 @@ type AsyncData<T> = {
 
 ---
 
-<Multiline lines={['Discriminated Unions', '🦸 to the rescue 🦸']} />
+<Multiline lines={['Discriminated Unions', '😎 to the rescue 😎']} />
 
 ---
 
@@ -359,3 +364,5 @@ const LoadingUser = (props: AsyncData<User>) => {
 <Multiline
   lines={['🦄 Happy & safe coding! 🖖', 'Thanks!']}
 />
+
+<SelfLink />
