@@ -1,6 +1,6 @@
 # Modeling Your Way To Consistency
 
-Slides for my lightning talk at [dotJS 2019](https://www.dotjs.io/)
+A longer version of [gillchristian/modeling-lightning](https://github.com/gillchristian/modeling-lightning)
 
 ### Development
 
