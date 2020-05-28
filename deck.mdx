@@ -2,7 +2,6 @@ import {Image, Appear} from 'mdx-deck'
 import {CodeSurfer, CodeSurferColumns, Step} from 'code-surfer'
 import {vsDark} from '@code-surfer/themes'
 
-import Me from './Me'
 import References from './References'
 import Multiline from './Multiline'
 import Logos from './Logos'
@@ -10,7 +9,13 @@ import Logos from './Logos'
 import typescript from './images/typescript.png'
 import whatIf from './images/what-if.jpg'
 
-export const theme = vsDark;
+export const theme = vsDark
+
+<span style={{ display: 'none' /* The first h1 (or h2, h3, ...) is used as title but it has to be MD one */ }}>
+
+# Modeling your way to consistency
+
+</span>
 
 <Multiline
   Elem="h1"
@@ -18,17 +23,17 @@ export const theme = vsDark;
   lines={['Modeling your way', 'to consistency']}
 />
 
-<Me />
+[modeling-ts.now.sh](https://modeling-ts.now.sh)
 
 ---
 
-<img src={typescript} style={{ width: '22vw' }} />
+## 🎯 Goal 🎯
 
----
+<Appear>
 
-<img src={typescript} style={{ width: '22vw' }} />
+## Making impossible states impossible
 
-<Logos />
+</Appear>
 
 ---
 
@@ -38,33 +43,36 @@ export const theme = vsDark;
 
 ---
 
-# 😡 🙅 👮 🤬
+<img src={typescript} style={{ width: '22vw' }} />
 
 ---
 
+# 😡 🙅 👮 🤬
+
+---
 
 <img src={whatIf} style={{ height: '90vh' }} />
 
 ---
 
+<Multiline
+  lines={['🤓 Disclaimer 😬', 'There will be code!']}
+/>
+
+[modeling-ts.now.sh](https://modeling-ts.now.sh)
+
+---
+
 <CodeSurfer>
 
-```ts
+```ts 1:6
 type AsyncData<T> = {
   isLoading: boolean
   didLoad: boolean
   data?: T
   error?: Error
 }
-```
 
-</CodeSurfer>
-
----
-
-<CodeSurfer>
-
-```js
 const notAsked = {
   isLoading: false,
   didLoad: false,
@@ -78,15 +86,7 @@ const loading = {
   data: undefined,
   error: undefined,
 }
-```
 
-</CodeSurfer>
-
----
-
-<CodeSurfer>
-
-```js
 const success = {
   isLoading: false,
   didLoad: true,
@@ -100,6 +100,18 @@ const failure = {
   data: undefined,
   error: error,
 }
+```
+
+```diff 8:13
+```
+
+```diff 15:20
+```
+
+```diff 22:27
+```
+
+```diff 29:34
 ```
 
 </CodeSurfer>
@@ -116,17 +128,17 @@ type AsyncData<T> = {
   error?: Error
 }
 
-const LoadingUser = (props: AsyncData<User>) => {
-  if (props.isLoading) {
+const LoadingUser: FC<{ user: AsyncData<User> }> = ({ user }) => {
+  if (user.isLoading) {
     return <Loading />
   }
 
-  if (props.didLoad && props.error) {
-    return <ErrorMessage error={props.error} />
+  if (user.didLoad && user.error) {
+    return <ErrorMessage error={user.error} />
   }
 
-  if (props.didLoad && props.data) {
-    return <UserCard user={props.data} />
+  if (user.didLoad && user.data) {
+    return <UserCard user={user.data} />
   }
 
   return <Idle />
@@ -141,17 +153,17 @@ type AsyncData<T> = {
   error?: Error
 }
 
-const LoadingUser = (props: AsyncData<User>) => {
-  if (props.isLoading) {
+const LoadingUser: FC<{ user: AsyncData<User> }> = ({ user }) => {
+  if (user.isLoading) {
     return <Loading />
   }
 
-  if (props.didLoad && props.error) {
-    return <ErrorMessage error={props.error} />
+  if (user.didLoad && user.error) {
+    return <ErrorMessage error={user.error} />
   }
 
-  if (props.didLoad && props.data) {
-    return <UserCard user={props.data} />
+  if (user.didLoad && user.data) {
+    return <UserCard user={user.data} />
   }
 
   return <Idle />
@@ -181,13 +193,9 @@ const leWhat: AsyncData<User> = {
 
 ---
 
-## 😒 No single source of truth 👎
-
----
-
 <CodeSurfer>
 
-```ts 2:5
+```ts 2:5 title="😒 No single source of truth 👎"
 type AsyncData<T> = {
   isLoading: boolean
   didLoad: boolean
@@ -202,50 +210,40 @@ type AsyncData<T> = {
 
 ## 🤔 What to do? 🤔
 
+<Appear>
+
+<span>PR reviews?</span>
+
+<span>Unit tests?</span>
+
+</Appear>
+
+---
+
+## 🦄 Better Types 🦄
+
 ---
 
 <CodeSurfer>
 
-```ts 1:5 title="🌋 One property to decide them all 🧙"
+```ts 1:5 title="🌋 One property to decide them all 💍"
 type Status =
   | "notAsked"
   | "loading"
   | "success"
-  | "failure";
+  | "failure"
 
-interface AsyncData<T> {
-  status: Status;
-  data?: T;
-  error?: string;
+type AsyncData<T> = {
+  status: Status
+  data?: T
+  error?: Error
 }
 ```
 
-```ts 7:10 title="🌋 One property to decide them all 🧙"
-type Status =
-  | "notAsked"
-  | "loading"
-  | "success"
-  | "failure";
-
-interface AsyncData<T> {
-  status: Status;
-  data?: T;
-  error?: string;
-}
+```diff 7:10 title="🌋 One property to decide them all 💍"
 ```
 
-```ts title="🌋 One property to decide them all 🧙"
-type Status =
-  | "notAsked"
-  | "loading"
-  | "success"
-  | "failure";
-
-interface AsyncData<T> {
-  status: Status;
-  data?: T;
-  error?: string;
-}
+```diff 1:10 title="🌋 One property to decide them all 💍"
 ```
 
 </CodeSurfer>
@@ -259,65 +257,35 @@ type Status =
   | "notAsked"
   | "loading"
   | "success"
-  | "failure";
+  | "failure"
 
-interface AsyncData<T> {
-  status: Status;
-  data?: T;
-  error?: string;
+type AsyncData<T> = {
+  status: Status
+  data?: T
+  error?: Error
 }
 
-const LoadingUser = (props: AsyncData<User>) => {
-  if (props.status === 'notAsked') {
+const LoadingUser: FC<{ user: AsyncData<User> }> = ({ user }) => {
+  if (user.status === 'notAsked') {
     return <Idle />
   }
 
-  if (props.status === 'loading') {
+  if (user.status === 'loading') {
     return <Loading />
   }
 
-  if (props.status === 'failure') {
-    const error = props.error || 'There was an error'
+  if (user.status === 'failure') {
+    const error = user.error.message || 'Error!'
     return <ErrorMessage error={error} />
   }
 
-  return props.data
-    ? <UserCard user={props.data} />
+  return user.data
+    ? <UserCard user={user.data} />
     : null
 }
 ```
 
-```ts 14:29
-type Status =
-  | "notAsked"
-  | "loading"
-  | "success"
-  | "failure";
-
-interface AsyncData<T> {
-  status: Status;
-  data?: T;
-  error?: string;
-}
-
-const LoadingUser = (props: AsyncData<User>) => {
-  if (props.status === 'notAsked') {
-    return <Idle />
-  }
-
-  if (props.status === 'loading') {
-    return <Loading />
-  }
-
-  if (props.status === 'failure') {
-    const error = props.error || 'There was an error'
-    return <ErrorMessage error={error} />
-  }
-
-  return props.data
-    ? <UserCard user={props.data} />
-    : null
-}
+```diff 14:29
 ```
 
 </CodeSurfer>
@@ -334,7 +302,7 @@ const LoadingUser = (props: AsyncData<User>) => {
 const porQue: AsyncData<User> = {
   status: 'success',
   data: undefined,
-  error: 'Something went wrong',
+  error: new Error('Something went wrong'),
 }
 ```
 
@@ -360,8 +328,38 @@ type AsyncData<T> =
   | {status: 'failure', error: Error}
 ```
 
-```diff 4[6:31],5[6:36] title="No more optional values 🤯"
+```ts 4[6:31],5[6:36] title="No more optional values 🤯"
+type AsyncData<T> =
+  | {status: 'notAsked'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
 
+const nope: AsyncData<User> = {
+  status: 'failure', 
+}
+
+const niet: AsyncData<User> = {
+  status: 'success',
+  error: new Error('Something wrong'),
+}
+```
+
+```ts 7:14 title="These are type errors now 👌"
+type AsyncData<T> =
+  | {status: 'notAsked'}
+  | {status: 'loading'}
+  | {status: 'success', data: T}
+  | {status: 'failure', error: Error}
+
+const nope: AsyncData<User> = {
+  status: 'failure', 
+}
+
+const niet: AsyncData<User> = {
+  status: 'success',
+  error: new Error('Something wrong'),
+}
 ```
 
 </CodeSurfer>
@@ -377,82 +375,91 @@ type AsyncData<T> =
   | {status: 'success', data: T}
   | {status: 'failure', error: Error}
 
-const LoadingUser = (props: AsyncData<User>) => {
-  if (props.status === 'notAsked') {
+const LoadingUser: FC<{ user: AsyncData<User> }> = ({ user }) => {
+  if (user.status === 'notAsked') {
     return <Idle />
   }
 
-  if (props.status === 'loading') {
+  if (user.status === 'loading') {
     return <Loading />
   }
 
-  if (props.status === 'failure') {
-    return <ErrorMessage error={props.error} />
+  if (user.status === 'failure') {
+    return <ErrorMessage error={user.error} />
   }
 
-  return <UserCard user={props.data} />
+  return <UserCard user={user.data} />
 }
 ```
 
-```ts 8:20
-type AsyncData<T> =
-  | {status: 'notAsked'}
-  | {status: 'loading'}
-  | {status: 'success', data: T}
-  | {status: 'failure', error: Error}
-
-const LoadingUser = (props: AsyncData<User>) => {
-  if (props.status === 'notAsked') {
-    return <Idle />
-  }
-
-  if (props.status === 'loading') {
-    return <Loading />
-  }
-
-  if (props.status === 'failure') {
-    return <ErrorMessage error={props.error} />
-  }
-
-  return <UserCard user={props.data} />
-}
+```diff 8:20
 ```
 
-```ts 16:20
-type AsyncData<T> =
-  | {status: 'notAsked'}
-  | {status: 'loading'}
-  | {status: 'success', data: T}
-  | {status: 'failure', error: Error}
-
-const LoadingUser = (props: AsyncData<User>) => {
-  if (props.status === 'notAsked') {
-    return <Idle />
-  }
-
-  if (props.status === 'loading') {
-    return <Loading />
-  }
-
-  if (props.status === 'failure') {
-    return <ErrorMessage error={props.error} />
-  }
-
-  return <UserCard user={props.data} />
-}
+```diff 16:20
 ```
 
 </CodeSurfer>
 
 ---
+
+<Multiline
+  Elem="h1"
+  lines={[
+    '🦄 🤗 🎉 🦺',
+    '🚢 📦',
+  ]}
+/>
+
+---
+
+## Conclusion 👀
+
+---
+
+<Multiline
+  Elem="h3"
+  lines={['Domain Modeling &', 'Type Driven Development', '💪 Enable us 👍']}
+/>
+
+---
+
+<img src={typescript} style={{ width: '22vw' }} />
+
+<Logos />
+
+---
+
+## Bonus 🎁
+
+<Appear>
 
 ## 📜 Let's make it declarative λ 🗺
 
+</Appear>
+
 ---
 
 <CodeSurfer>
 
 ```ts
+const LoadingUser: FC<{ user: AsyncData<User> }> = ({ user }) => {
+  if (props.status === 'notAsked') {
+    return <Idle />
+  }
+
+  if (props.status === 'loading') {
+    return <Loading />
+  }
+
+  if (props.status === 'failure') {
+    return <ErrorMessage error={props.error} />
+  }
+
+  return <UserCard user={props.data} />
+}
+```
+
+```ts 1:12
 type AsyncData<T> =
   | {status: 'notAsked'}
   | {status: 'loading'}
@@ -481,7 +488,7 @@ type Matcher<T, R> = {
   failure: (error: Error) => R
 }
 
-const LoadingUser = (props: AsyncData<User>) => {
+const LoadingUser: FC<{ user: AsyncData<User> }> = ({ user }) => {
   if (props.status === 'notAsked') {
     return <Idle />
   }
@@ -532,9 +539,6 @@ const match = <T, R>(m: Matcher<T, R>, ad: AsyncData<T>): R => {
 ```diff 14[15:59]
 ```
 
-```diff 7:12
-```
-
 ```diff 15:27
 ```
 
@@ -568,7 +572,7 @@ const match = <T, R>(m: Matcher<T, R>, ad: AsyncData<T>) => {
   return m.success(ad.data)
 }
 
-const LoadingUser = (props: AsyncData<User>) => {
+const LoadingUser: FC<{ user: AsyncData<User> }> = ({ user }) =>
   match<User, React.ReactNode>(
     {
       notAsked: () => <Idle />,
@@ -576,7 +580,7 @@ const LoadingUser = (props: AsyncData<User>) => {
       failure: (error) => <ErrorMessage error={error} />,
       success: (user) => <UserCard user={user} />,
     },
-    props,
+    user,
   )
 ```
 
@@ -585,16 +589,6 @@ const LoadingUser = (props: AsyncData<User>) => {
 ```
 
 </CodeSurfer>
-
----
-
-<Multiline
-  lines={['Domain Modeling &', 'Type Driven Development', '💪 Enable us 👍']}
-/>
-
----
-
-# 🦄 🎉 🤗 🦺
 
 ---
 
